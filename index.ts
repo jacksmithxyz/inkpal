@@ -10,7 +10,7 @@ const anthropic = new Anthropic();
 
 async function getTelegramImage(imageArray: PhotoSize[]) {
   // The highest resolution image is in the final index position of imageArray
-  const highestQualityImg = imageArray[imageArray.length - 1];
+  const highestQualityImg = imageArray.pop();
 
   if (highestQualityImg) {
     const fileInfo = await bot.api.getFile(highestQualityImg?.file_id);
@@ -43,10 +43,7 @@ async function getAnthropicResponse(fileId: string) {
       {
         role: "user",
         content: [
-          {
-            type: "text",
-            text: PROMPT,
-          },
+          { type: "text", text: PROMPT },
           {
             type: "image",
             source: {
