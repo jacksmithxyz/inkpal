@@ -1,7 +1,7 @@
 import Anthropic, { toFile } from "@anthropic-ai/sdk";
 import { Bot } from "grammy";
 import type { PhotoSize } from "grammy/types";
-import { PROMPT } from "./prompt";
+import { PROMPT } from "./consts";
 
 const botToken = Bun.env.TELEGRAM_BOT_TOKEN || "";
 const bot = new Bot(botToken);
