@@ -29,7 +29,6 @@ async function uploadImageToAnthropic(image: ArrayBuffer) {
     file: await toFile(image, undefined, { type: "image/jpeg" }),
     betas: ["files-api-2025-04-14"],
   });
-  console.log(fileData);
 
   return fileData;
 }
