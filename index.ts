@@ -64,7 +64,11 @@ async function getAnthropicResponse(fileId: string) {
   return message;
 }
 
-bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
+bot.command("start", (ctx) =>
+  ctx.reply(
+    "Welcome to Inkpal! Please send an image of your handwritten text to get started.",
+  ),
+);
 
 bot.on("message:photo", async (ctx) => {
   const photoArray = ctx.message.photo;
