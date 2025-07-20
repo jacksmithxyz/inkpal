@@ -12,16 +12,21 @@ async function getTelegramImage(imageArray: PhotoSize[]) {
   // The highest resolution image is in the final index position of imageArray
   const highestQualityImg = imageArray.pop();
 
-  if (highestQualityImg) {
-    const fileInfo = await bot.api.getFile(highestQualityImg?.file_id);
-    const filePath = fileInfo.file_path;
-    const fileUrl = `https://api.telegram.org/file/bot${bot.token}/${filePath}`;
-
-    const response = await fetch(fileUrl);
-    const imageBuffer = await response.arrayBuffer();
-
-    return imageBuffer;
+  if (!highestQualityImg) {
+    throw new Error("No image found in array.");
   }
+
+  const fileInfo = await bot.api.getFile(highestQualityImg?.file_id);
+  const filePath = fileInfo.file_path;
+
+  const fileUrl = `https://api.telegram.org/file/bot${bot.token}/${filePath}`;
+  const response = await fetch(fileUrl);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch file from Telegram");
+  }
+
+  return response.arrayBuffer();
 }
 
 async function uploadImageToAnthropic(image: ArrayBuffer) {
